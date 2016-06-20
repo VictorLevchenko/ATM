@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.team.exeptions.ErrorResponseException;
-import com.team.model.Account;
 import com.team.model.User;
 
 
@@ -35,35 +34,40 @@ public class UserRepository {
 			throw new ErrorResponseException("User already exists");
 		}
 		logger.info(">> user have registered");
-		User user = null;
-		try {
-				String query = "SELECT * FROM users WHERE login = ?";
-				user = jdbcTemplate.queryForObject(query, new Object[]{login},
-						new RowMapper<User>() {
-					@Override
-					public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-						return new User(
-								rs.getInt("id"),
-								rs.getString("login"),
-								rs.getString("password"),
-								rs.getBoolean("is_admin"));
-					}
-				});
+		
+		User user = getUserByLogin(login);
+		
 		logger.info(">> get registered user from database");
-		} catch(Exception e) {
-			throw new ErrorResponseException("Unsuccessful attempt writing to database");
-		}
+		
 		return user;
 	}
 	
-	public boolean createUserAccount(User user) {
-		 
-		logger.info(">> create user account");
-		String query = "INSERT INTO user_accounts (user_id, balance) VALUES (?, ?)";
-		Object[] args = new Object[] {user.getId(), Account.DEFAULT_BALANCE};
-		int rowNum = jdbcTemplate.update(query, args);
+	
+	
+	public User getUserByLogin(String login) throws ErrorResponseException {
 		
-		return (rowNum != 0);
+		logger.info(">> getUserByLogin()");
+		
+		User user = null;
+		try {
+			String query = "SELECT * FROM users WHERE login = ?";
+			user = jdbcTemplate.queryForObject(query, new Object[]{login},
+					new RowMapper<User>() {
+				@Override
+				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+					return new User(
+							rs.getInt("id"),
+							rs.getString("login"),
+							rs.getString("password"),
+							rs.getBoolean("is_admin"));
+				}
+			});
+		
+	    } catch(Exception e) {
+	    	throw new ErrorResponseException("User not regestered");
+	    }
+		logger.info(">> get registered user from database");
+		return user;
 	}
 
 }

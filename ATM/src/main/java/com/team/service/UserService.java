@@ -1,5 +1,7 @@
 package com.team.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class UserService {
 	
 	@Autowired 
 	private UserRepository userRepository;
+	@Autowired 
+	private HttpSession session;
 	
 	public User registerUser(String login, String password) throws ErrorResponseException {
 		
@@ -23,8 +27,23 @@ public class UserService {
 		return userRepository.registerUser(login, password);
 	}
 	
-	public boolean createUserAccount(User user) {
-		
-		return userRepository.createUserAccount(user);
+	public User loginUser(String login, String password) throws ErrorResponseException {
+		logger.info(">>validateUser()");
+		User user = userRepository.getUserByLogin(login);
+		return user;
 	}
+	public void saveAutorizedUsertToSession(User user) {
+		session.setAttribute("user", user);
+	}
+	public User getAuthorizedUserFromSession() throws ErrorResponseException {
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			throw new ErrorResponseException("Not authorized user");
+		}
+		return user;
+	}
+	public void deleteUserFromSession() {
+		session.setAttribute("user", null);
+	}
+	
 }
