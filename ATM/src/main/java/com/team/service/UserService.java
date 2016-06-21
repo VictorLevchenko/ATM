@@ -20,30 +20,95 @@ public class UserService {
 	@Autowired 
 	private HttpSession session;
 	
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @return
+	 * @throws ErrorResponseException
+	 */
 	public User registerUser(String login, String password) throws ErrorResponseException {
 		
-		logger.info(">> registerUser()");
+		logger.info(">> into registerUser()");
 		
-		return userRepository.registerUser(login, password);
+		logger.info(">> regestering user");
+		User userRegistered =  userRepository.registerUser(login, password);
+		logger.info(">> userRegistered = " + userRegistered);
+		
+		logger.info("<< out of registerUser()");
+		
+		return userRegistered;
 	}
 	
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @return
+	 * @throws ErrorResponseException
+	 */
 	public User loginUser(String login, String password) throws ErrorResponseException {
 		logger.info(">>validateUser()");
 		User user = userRepository.getUserByLogin(login);
 		return user;
 	}
-	public void saveAutorizedUsertToSession(User user) {
+	
+/**
+ * 
+ * @param user
+ */
+	
+	public boolean saveAutorizedUserToSession(User user) {
+		
+		logger.info(">> into saveAutorizedUserToSession()");
+		
+		logger.info(">> save user to session");
 		session.setAttribute("user", user);
+		logger.info(">> user saved to session");
+		
+		logger.info(">> reading user from session");
+		User userReadFromSession = (User) session.getAttribute("user");
+		logger.info(">> user = " + user);
+		
+		logger.info("<< out of saveAutorizedUserToSession()");
+		
+		return userReadFromSession.equals(user);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ErrorResponseException
+	 */
 	public User getAuthorizedUserFromSession() throws ErrorResponseException {
+		
+		logger.info(">> into getAuthorizedUserFromSession");
+		
+		logger.info(">> reading user from session");
 		User user = (User) session.getAttribute("user");
+		logger.info(">> user = " + user);
+		
 		if(user == null) {
 			throw new ErrorResponseException("Not authorized user");
 		}
+		
+		logger.info("<< out of getAuthorizedUserFromSession()");
+		
 		return user;
 	}
-	public void deleteUserFromSession() {
+	
+	/**
+	 * 
+	 */
+	
+	public void deleteAuthorizedUserFromSession() {
+	
+		logger.info(">> into deleteAuthorizedUserFromSession");
+		
+		logger.info(">> deleting user from session");
 		session.setAttribute("user", null);
+		User userDeleted = (User) session.getAttribute("user");
+		logger.info(">> userDeleted = " + userDeleted);
 	}
 	
 }

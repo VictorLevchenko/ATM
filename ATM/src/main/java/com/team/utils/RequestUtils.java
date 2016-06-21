@@ -22,6 +22,7 @@ public class RequestUtils {
 		logger.info("login = " + login);
 		return login;
 	}
+	
 	public static String getPassword(Map<String, String> requestParams) throws ErrorResponseException {
 		
 		String password = requestParams.get("password");
@@ -30,6 +31,15 @@ public class RequestUtils {
 		}
 		logger.info("password = " + password);
 		return password;
+	}
+	
+	public static int getAmount(Map<String, String> requestParams) throws ErrorResponseException {
+		
+		int amount = Integer.parseInt(requestParams.get("amount"));
+		if(amount <= 0) {
+			throw new ErrorResponseException("Invalid amount");
+		}
+		return amount;
 	}
 	
 }

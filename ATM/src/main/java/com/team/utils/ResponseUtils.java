@@ -10,6 +10,10 @@ public class ResponseUtils {
 	
 	public static Logger logger = LoggerFactory.getLogger(ResponseUtils.class);
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public static Map<String, String> buildSuccessfulResponse() {
 		
 		Map<String, String> responseParams = new HashMap<>();
@@ -17,6 +21,22 @@ public class ResponseUtils {
 		responseParams.put("status", "OK");
 		
 		return responseParams;
+	}
+	
+	/** 
+	 * 
+	 * @param e
+	 * @return
+	 */
+	public static Map<String, String>
+		buildSuccessfulResponse(Map<String, String> responseParams) {
+		
+		logger.info(">> into buildSucessfulResponse()");
+		
+		responseParams.put("status", "OK");
+		
+		return responseParams;
+		
 	}
 	
 	public static Map<String, String> buildErrorResponse(Exception e) {

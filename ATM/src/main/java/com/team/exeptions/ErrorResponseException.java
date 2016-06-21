@@ -8,7 +8,7 @@ public class ErrorResponseException extends Exception {
 	String extraMessage;
 
 	public ErrorResponseException(String extraMessage) {
-		super();
+		
 		this.extraMessage = extraMessage;
 	}
 
