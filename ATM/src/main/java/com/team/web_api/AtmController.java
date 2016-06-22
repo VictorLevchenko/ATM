@@ -91,7 +91,7 @@ public class AtmController {
 		
 		logger.info(">> getting list of banknote packs for user");
 		List<BanknotePack> bankNotePacks = 
-				atmService.withdrawAmountFromUserAccount(user, amount);
+				atmService.withdrawAmountFromAtm(user, amount);
 		logger.info(">> bankNotePacks = " + bankNotePacks.toString());
 		
 		logger.info(">> withdrawing money from user account");

@@ -7,8 +7,12 @@ package com.team.exeptions;
 public class ErrorResponseException extends Exception {
 	String extraMessage;
 
-	public ErrorResponseException(String extraMessage) {
-		
+	public ErrorResponseException(String message) {
+		super(message);
+	}
+	
+	public ErrorResponseException(String message,String extraMessage) {
+		super(message);
 		this.extraMessage = extraMessage;
 	}
 

@@ -37,5 +37,15 @@ public class AtmRepository {
 		            }
 		        );
 	}
+
+	public void withdrawAtmBanknotes(List<BanknotePack> banknotePacksBestTry) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void withdrawBanknotesFromAtm(List<BanknotePack> banknotePacksBestTry) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
