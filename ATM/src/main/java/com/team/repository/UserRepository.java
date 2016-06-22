@@ -28,7 +28,7 @@ public class UserRepository {
 		try {
 				String query = "INSERT INTO users (login, password) VALUES (?, ?)";
 				Object[] args = new Object[] {login, password};
-				int rowNum = jdbcTemplate.update(query, args);
+				jdbcTemplate.update(query, args);
 		
 		} catch(Exception e) {
 			throw new ErrorResponseException("User already exists");

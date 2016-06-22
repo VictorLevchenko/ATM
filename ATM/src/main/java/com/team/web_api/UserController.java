@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team.exeptions.ErrorResponseException;
-import com.team.model.Account;
 import com.team.model.User;
 import com.team.service.AccountService;
 import com.team.service.UserService;
 import com.team.utils.RequestUtils;
 import com.team.utils.ResponseUtils;
+import com.team.utils.ValidateUtils;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -50,13 +50,18 @@ public class UserController {
 		String password = RequestUtils.getPassword(requestParams);
 		logger.info(">> login = " + login + "password = " + password);
 		
+		logger.info(">> validating email");
+		 boolean isValidEmail = ValidateUtils.validateEMail(login);
+		 boolean isValidPassword = ValidateUtils.validatePassword(password);
+		 logger.info("isValidEmail = " + isValidEmail + "isValidPassword = " + isValidPassword);
+		
 		logger.info(">> regesterign user");
 		User userRegistered = userService.registerUser(login, password);
 		logger.info(">> userRegistered = " + userRegistered);
 		
 		logger.info(">> creating user account");
-		Account newUserAccount = accountService.createUserAccount(userRegistered);
-		logger.info(">> newUserAccount = " + newUserAccount);
+		accountService.createUserAccount(userRegistered);
+		
 		
 		logger.info(">> logining user");
 		User userLogined = userService.loginUser(login, password);

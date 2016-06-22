@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.exeptions.ErrorResponseException;
-import com.team.model.Account;
 import com.team.model.User;
 import com.team.repository.AccountRepository;
 
@@ -15,9 +14,9 @@ public class AccountService {
 	@Autowired 
 	private AccountRepository accountRepository;
 	
-	public Account createUserAccount(User user) {
+	public void createUserAccount(User user) {
 	
-		return accountRepository.createUserAccount(user);
+		accountRepository.createUserAccount(user);
 	}
 	
 	public boolean checkIfUserHaveAmountOnAccount(User user, int amount) throws ErrorResponseException {
@@ -32,13 +31,21 @@ public class AccountService {
 		return balance >= amount;
 	}
 /**
- * 
+ * withdraw amount from user account after user get his money
  * @param user
  * @param amount
  * @return
+ * @throws ErrorResponseException 
  */
-	public boolean withdrawAmountFromUserAccount(User user, int amount) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean withdrawAmountFromUserAccount(User user, int amount) throws ErrorResponseException {
+		
+		if(accountRepository.withdrawAmountFromUserAccount(user, amount)) {
+			
+			return true;
+		} else {
+			throw new ErrorResponseException("Failed to withdraw from user account");
+			
+		}
+
 	}
 }

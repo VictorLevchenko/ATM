@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,9 +14,10 @@ import com.team.model.BanknotePack;
 
 @Repository
 public class AtmRepository {
-//TODO implement
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	private Logger logger = LoggerFactory.getLogger(AtmRepository.class);
 	
 	/**
 	 * 
@@ -28,7 +30,8 @@ public class AtmRepository {
 		return jdbcTemplate.query(query,
 		            new RowMapper<BanknotePack>() {
 		                @Override
-		                public BanknotePack mapRow(ResultSet rs, int rowNum) throws SQLException  {
+		                public BanknotePack mapRow(ResultSet rs, int rowNum)
+		                		throws SQLException  {
 		                    return new BanknotePack(
 		                        rs.getInt("banknote_value"),
 		                        rs.getInt("banknote_num")
@@ -38,14 +41,38 @@ public class AtmRepository {
 		        );
 	}
 
-	public void withdrawAtmBanknotes(List<BanknotePack> banknotePacksBestTry) {
-		// TODO Auto-generated method stub
+	/** withdraw bank notes from ATM after user has got his money
+	 * 
+	 * @param banknotePacks  money given to user
+	 */
+
+	public void withdrawBanknotesFromAtm(List<BanknotePack> banknotePacks) {
+	
+		logger.info(">> into  withdrawBanknotesFromAtm()");
+		for(BanknotePack banknotePack: banknotePacks) {
+			String query = "UPDATE atm_banknote_packs"
+					      + "SET banknote_num = banknote_num - ?"
+					      + "WHERE banknote_value = ?";
+			jdbcTemplate.update(query, banknotePack.getNote(), banknotePack.getAmount());
+					      
+		}
 		
+		logger.info(">> out of withdrawBanknotesFromAtm()");
 	}
 
-	public void withdrawBanknotesFromAtm(List<BanknotePack> banknotePacksBestTry) {
-		// TODO Auto-generated method stub
+	/**
+	 * fill up atm with default number of notes
+	 */
+	public void fillUpAtm() {
+	
+		logger.info(">> into fillUpAtm()");
+		String query = "UPDATE atm_banknote_packs"
+					+	 "SET banknote_num = ?";
+		int rowsNum = jdbcTemplate.update(query, BanknotePack.DEFAULT_BANKNOTE_AMOUNT);
+		logger.info(">> rowsNum = " + rowsNum );
 		
+		logger.info(">> out of fillUpAtm()");
+	
 	}
 	
 }

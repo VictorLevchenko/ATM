@@ -7,7 +7,9 @@ public class Account {
 	private int id;
 	private int userId;
 	private int balance;
-	
+	public Account() {
+		
+	}
 	public Account(int id, int userId, int balance) {
 		
 		this.id = id;

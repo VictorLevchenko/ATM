@@ -7,6 +7,10 @@ public class User {
 	private String password;
 	private boolean isAdmin;
 	
+	public User() {
+		
+	}
+	
 	public User(int id, String login, String password, boolean isAdmin) {
 		
 		this.id = id;

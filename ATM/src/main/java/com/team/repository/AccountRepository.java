@@ -13,22 +13,27 @@ import org.springframework.stereotype.Repository;
 import com.team.exeptions.ErrorResponseException;
 import com.team.model.Account;
 import com.team.model.User;
-import com.team.service.UserService;
+
 
 @Repository
 public class AccountRepository {
-//TODO implement
+
 	private static Logger logger = LoggerFactory.getLogger(AccountRepository.class);
 	@Autowired private JdbcTemplate jdbcTemplate;
+	/**
+	 * create user account and set balance to default
+	 * @param user
+	 * @return
+	 */
 	
-	public Account createUserAccount(User user) {
+	public boolean createUserAccount(User user) {
 		 
 		logger.info(">> create user account");
 		String query = "INSERT INTO user_accounts (user_id, balance) VALUES (?, ?)";
 		Object[] args = new Object[] {user.getId(), Account.DEFAULT_BALANCE};
 		int rowNum = jdbcTemplate.update(query, args);
-		//TODO return account
-		return null;
+		
+		return rowNum != 0;
 	}
 	
 	public Integer getBalanceFromUserAccount(User user) throws ErrorResponseException {
@@ -51,5 +56,12 @@ public class AccountRepository {
     	}
 		logger.info("<< getBalanceFromUserAccount");
     	return balance;
+	}
+
+	public boolean withdrawAmountFromUserAccount(User user, int amount) {
+
+		String query = " UPDATE user_account SET balance = balance - ?";
+		int rowsNum = jdbcTemplate.update(query, amount);
+		return rowsNum != 0;
 	}
 }

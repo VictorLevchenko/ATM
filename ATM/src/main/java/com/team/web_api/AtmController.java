@@ -54,7 +54,7 @@ public class AtmController {
 		}
 		
 		logger.info(">> filling atm");
-		AtmService.fillUpAtm();
+		atmService.fillUpAtm();
 		
 		logger.info("<< out of fillUpAction()");
 		return ResponseUtils.buildSuccessfulResponse();

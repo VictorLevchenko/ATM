@@ -5,6 +5,10 @@ package com.team.exeptions;
  *  global controller. 
  */
 public class ErrorResponseException extends Exception {
+	
+	private static final long serialVersionUID = 2552367499609311658L;
+	
+	
 	String extraMessage;
 
 	public ErrorResponseException(String message) {

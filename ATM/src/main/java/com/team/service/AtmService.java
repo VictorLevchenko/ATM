@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hazelcast.logging.LoggerFactory;
 import com.team.exeptions.ErrorResponseException;
 import com.team.model.BanknotePack;
 import com.team.model.User;
@@ -15,12 +14,11 @@ import com.team.utils.AtmUtils;
 
 @Service
 public class AtmService {
-//TODO implement
+
 	@Autowired
 	private AtmRepository atmRepository;
 	
-	@Autowired
-	private AccountService accountService;
+	
 	
 	private Logger logger = org.slf4j.LoggerFactory.getLogger(AtmService.class);
 	/**
@@ -33,7 +31,7 @@ public class AtmService {
 	public List<BanknotePack> 
 		withdrawAmountFromAtm(User user, int amountToWithdraw) 
 				throws ErrorResponseException {
-		//TODO implement
+	
 		logger.info(">> into withdrawAmountFromUserAccount()");
 		
 		logger.info(">> getting all banknote packs in ATM");
@@ -76,9 +74,14 @@ public class AtmService {
 				(new Integer[] {minAmountSuggestion, maxAmountSuggestion}).toString());
 	}
 
-	public static boolean fillUpAtm() {
-		return false;
-		// TODO Auto-generated method stub
+	/** fill up ATM 
+	 *  just call method on repository level
+	 */
+	public  void fillUpAtm() {
 		
+		logger.info(">> into fillUpAtm()");
+		atmRepository.fillUpAtm();
+		
+		logger.info(">> out of fillUpAtm()");
 	}
 }

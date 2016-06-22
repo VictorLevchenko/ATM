@@ -5,10 +5,14 @@ package com.team.model;
  */
 public class BanknotePack {
 
+	public static final int DEFAULT_BANKNOTE_AMOUNT = 2;
+	
 	private int note;
 	private int amount;
 	
-	
+	public BanknotePack() {
+		
+	}
 	
 	public BanknotePack(int note, int amount) {
 		
