@@ -47,10 +47,7 @@ public class AtmService {
 			
 			throw new ErrorResponseException("Atm is empty");
 			
-		} else if(amountInAtm < amountToWithdraw) {
-			
-			throw new ErrorResponseException("Not enough money in Atm");
-		}
+		} 
 		
 		logger.info(">> getting equal or lower amount");
 		List<BanknotePack> banknotePacksBestTry = 
