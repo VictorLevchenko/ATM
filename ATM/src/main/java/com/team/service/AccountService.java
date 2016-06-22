@@ -19,14 +19,15 @@ public class AccountService {
 		accountRepository.createUserAccount(user);
 	}
 	
-	public boolean checkIfUserHaveAmountOnAccount(User user, int amount) throws ErrorResponseException {
+	public boolean checkIfUserHaveAmountOnAccount(User user, int amount) 
+			throws ErrorResponseException {
 		Integer balance = accountRepository.getBalanceFromUserAccount(user);
 		logger.info(">> balance = " + balance);
 		if(balance == null) {
 			throw new ErrorResponseException("User has no account");
 		}
 		if(balance < amount) {
-			throw new ErrorResponseException("User has not enough money no account");
+			throw new ErrorResponseException("User has not enough money on account");
 		}
 		return balance >= amount;
 	}
@@ -37,7 +38,8 @@ public class AccountService {
  * @return
  * @throws ErrorResponseException 
  */
-	public boolean withdrawAmountFromUserAccount(User user, int amount) throws ErrorResponseException {
+	public boolean withdrawAmountFromUserAccount(User user, int amount) 
+			throws ErrorResponseException {
 		
 		if(accountRepository.withdrawAmountFromUserAccount(user, amount)) {
 			

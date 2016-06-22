@@ -46,11 +46,14 @@ public class ResponseUtils {
 		Map<String, String> responseParams = new HashMap<>();
 		
 		responseParams.put("status", "ERROR");
+		responseParams.put("message", e.getMessage());
 	
 		//if it's our exceptions
 		if(e instanceof ErrorResponseException) {
 			logger.info(">>Exception: " +((ErrorResponseException)e).getExtraMessage());
-			responseParams.put("Extra Message", ((ErrorResponseException) e).getExtraMessage());
+			String s = ((ErrorResponseException) e).getExtraMessage();
+			if(s != null)
+			responseParams.put("You can take", ((ErrorResponseException) e).getExtraMessage());
 		}
 		else {
 			responseParams.put("message", e.getMessage());

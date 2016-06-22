@@ -33,7 +33,7 @@ public class BanknotePack {
 	}
 	@Override
 	public String toString() {
-		return "BanknotePack [note=" + note + ", amount=" + amount + "]";
+		return "[note=" + note + ", amount=" + amount + "]";
 	}
 	@Override
 	public int hashCode() {

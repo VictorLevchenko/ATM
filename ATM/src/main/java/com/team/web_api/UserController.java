@@ -112,10 +112,6 @@ public class UserController {
 		
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	@RequestMapping(value = "/logout",
 					produces = MediaType.APPLICATION_JSON_VALUE
 					)
@@ -126,6 +122,18 @@ public class UserController {
 		logger.info(">> deleting user from session");
 		userService.deleteAuthorizedUserFromSession();
 		logger.info(">> user delete from session");
+		
+		return ResponseUtils.buildSuccessfulResponse();
+	}
+	
+	//TODO only for test
+	@RequestMapping (value = "/check_session", 
+					method = RequestMethod.POST,
+					consumes = MediaType.APPLICATION_JSON_VALUE,
+					produces = MediaType.APPLICATION_JSON_VALUE
+					)
+	Map<String, String> checkSession() throws ErrorResponseException {
+		logger.info("user = " + userService.getAuthorizedUserFromSession());
 		
 		return ResponseUtils.buildSuccessfulResponse();
 	}

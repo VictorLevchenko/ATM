@@ -50,10 +50,10 @@ public class AtmRepository {
 	
 		logger.info(">> into  withdrawBanknotesFromAtm()");
 		for(BanknotePack banknotePack: banknotePacks) {
-			String query = "UPDATE atm_banknote_packs"
-					      + "SET banknote_num = banknote_num - ?"
+			String query = "UPDATE atm_banknote_packs "
+					      + "SET banknote_num = banknote_num - ? "
 					      + "WHERE banknote_value = ?";
-			jdbcTemplate.update(query, banknotePack.getNote(), banknotePack.getAmount());
+			jdbcTemplate.update(query, banknotePack.getAmount(), banknotePack.getNote());
 					      
 		}
 		
@@ -66,7 +66,7 @@ public class AtmRepository {
 	public void fillUpAtm() {
 	
 		logger.info(">> into fillUpAtm()");
-		String query = "UPDATE atm_banknote_packs"
+		String query = "UPDATE atm_banknote_packs "
 					+	 "SET banknote_num = ?";
 		int rowsNum = jdbcTemplate.update(query, BanknotePack.DEFAULT_BANKNOTE_AMOUNT);
 		logger.info(">> rowsNum = " + rowsNum );

@@ -52,7 +52,7 @@ public class AccountRepository {
 	
     	} catch(Exception e) {
     		logger.info(">>" + e.getMessage());
-    		throw new ErrorResponseException("User not regestered");
+    		throw new ErrorResponseException("User has no account");
     	}
 		logger.info("<< getBalanceFromUserAccount");
     	return balance;
@@ -60,7 +60,7 @@ public class AccountRepository {
 
 	public boolean withdrawAmountFromUserAccount(User user, int amount) {
 
-		String query = " UPDATE user_account SET balance = balance - ?";
+		String query = " UPDATE user_accounts SET balance = balance - ?";
 		int rowsNum = jdbcTemplate.update(query, amount);
 		return rowsNum != 0;
 	}

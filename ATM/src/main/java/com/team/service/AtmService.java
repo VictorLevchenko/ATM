@@ -1,5 +1,6 @@
 package com.team.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,8 +43,13 @@ public class AtmService {
 		int amountInAtm = AtmUtils.countAmountInListOfBanknotePack(banknotePacks);
 		logger.info(">> amount in Atm = " + amountInAtm);
 		
-		if(amountInAtm < amountToWithdraw) {
+		if(amountInAtm == 0) {
+			
 			throw new ErrorResponseException("Atm is empty");
+			
+		} else if(amountInAtm < amountToWithdraw) {
+			
+			throw new ErrorResponseException("Not enough money in Atm");
 		}
 		
 		logger.info(">> getting equal or lower amount");
@@ -58,6 +64,7 @@ public class AtmService {
 		if(amountToWithdraw == minAmountSuggestion) {
 			
 			logger.info(">> success, we can give money to user");
+			logger.info(">> banknotePacksBestTry = " + banknotePacksBestTry.toString());
 			atmRepository.withdrawBanknotesFromAtm(banknotePacksBestTry);
 			
 			logger.info("<< successful return from withdrawAmountFromAtm()");
@@ -70,8 +77,9 @@ public class AtmService {
 		logger.info(">> maxAmountSuggestion = " + maxAmountSuggestion);
 		
 		logger.info(">> throw exception with suggestions");
-		throw new ErrorResponseException("Fail to withdraw amount. You can take ",
-				(new Integer[] {minAmountSuggestion, maxAmountSuggestion}).toString());
+		throw new ErrorResponseException("Fail to withdraw amount",
+				(Arrays.toString(new Integer[]
+						{minAmountSuggestion, maxAmountSuggestion}).toString()));
 	}
 
 	/** fill up ATM 
