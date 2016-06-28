@@ -50,13 +50,11 @@ public class ResponseUtils {
 	
 		//if it's our exceptions
 		if(e instanceof ErrorResponseException) {
-			logger.info(">>Exception: " +((ErrorResponseException)e).getExtraMessage());
+			logger.info(">> Exception extra message: "
+		+((ErrorResponseException)e).getExtraMessage());
 			String s = ((ErrorResponseException) e).getExtraMessage();
 			if(s != null)
 			responseParams.put("You can take", ((ErrorResponseException) e).getExtraMessage());
-		}
-		else {
-			responseParams.put("message", e.getMessage());
 		}
 		
 		return responseParams;

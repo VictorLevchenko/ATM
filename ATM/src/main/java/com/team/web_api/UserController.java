@@ -41,7 +41,8 @@ public class UserController {
 					consumes = MediaType.APPLICATION_JSON_VALUE,
 					produces = MediaType.APPLICATION_JSON_VALUE
 					)
-	public Map<String, String> registerUserAction(@RequestBody Map<String, String>requestParams) throws ErrorResponseException {
+	public Map<String, String> registerUserAction(@RequestBody Map<String, String>requestParams) 
+			throws ErrorResponseException {
 		
 		logger.info(">> into registerAction()");
 		
@@ -89,7 +90,8 @@ public class UserController {
 					consumes = MediaType.APPLICATION_JSON_VALUE,
 					produces = MediaType.APPLICATION_JSON_VALUE
 					)
-	public Map<String, String> loginUserAction(@RequestBody Map<String, String>requestParams) throws ErrorResponseException {
+	public Map<String, String> loginUserAction(@RequestBody Map<String, String>requestParams)
+			throws ErrorResponseException {
 		
 		logger.info(">> into loginAction()");
 		

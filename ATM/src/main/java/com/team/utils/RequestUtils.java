@@ -23,7 +23,8 @@ public class RequestUtils {
 		return login;
 	}
 	
-	public static String getPassword(Map<String, String> requestParams) throws ErrorResponseException {
+	public static String getPassword(Map<String, String> requestParams)
+			throws ErrorResponseException {
 		
 		String password = requestParams.get("password");
 		if((password == null) || password.isEmpty() ) {
@@ -33,7 +34,8 @@ public class RequestUtils {
 		return password;
 	}
 	
-	public static int getAmount(Map<String, String> requestParams) throws ErrorResponseException {
+	public static int getAmount(Map<String, String> requestParams) 
+			throws ErrorResponseException {
 		
 		int amount = Integer.parseInt(requestParams.get("amount"));
 		if(amount <= 0) {

@@ -48,7 +48,7 @@ public class UserService {
 	 * @throws ErrorResponseException
 	 */
 	public User loginUser(String login, String password) throws ErrorResponseException {
-		logger.info(">>validateUser()");
+		logger.info(">>loginUser()");
 		User user = userRepository.getUserByLogin(login);
 		return user;
 	}

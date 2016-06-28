@@ -75,7 +75,7 @@ public class AtmService {
 		
 		logger.info(">> throw exception with suggestions");
 		throw new ErrorResponseException("Fail to withdraw amount",
-				(Arrays.toString(new Integer[]
+				(Arrays.toString(new Integer[] //TODO  two times toString?
 						{minAmountSuggestion, maxAmountSuggestion}).toString()));
 	}
 
