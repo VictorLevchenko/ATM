@@ -19,6 +19,11 @@ public class AccountService {
 		accountRepository.createUserAccount(user);
 	}
 	
+	public Integer getBalanseFromUserAccount(User user) throws ErrorResponseException {
+		
+		return accountRepository.getBalanceFromUserAccount(user);
+	}
+	
 	public boolean checkIfUserHaveAmountOnAccount(User user, int amount) 
 			throws ErrorResponseException {
 		Integer balance = accountRepository.getBalanceFromUserAccount(user);

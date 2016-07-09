@@ -139,5 +139,35 @@ public class UserController {
 		
 		return ResponseUtils.buildSuccessfulResponse();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ErrorResponseException
+	 */
+	@RequestMapping(value = "/balance", method = RequestMethod.POST, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, String> getBalanceFromUserAccount()
+			throws ErrorResponseException {
+
+		logger.info(">> into getBalanceFromUserAccount()");
+
+		logger.info(">> getting user from session");
+		User user = userService.getAuthorizedUserFromSession();
+		logger.info(">> user = " + user);
+
+
+		logger.info(">> getting user balance");
+		Integer balance = accountService.getBalanseFromUserAccount(user);
+		logger.info(">> balance = " + balance);
+
+		Map<String, String> responseParams = new HashMap<>();
+		responseParams.put("balance", balance.toString());
+
+		logger.info("<< out of getBalanceFromUserAccount()");
+
+		return ResponseUtils.buildSuccessfulResponse(responseParams);
+	}
 
 }

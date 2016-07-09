@@ -1,11 +1,19 @@
 package com.team.view;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.service.UserService;
 import com.team.web_api.UserController;
 import com.vaadin.event.ShortcutAction.KeyCode;
@@ -43,15 +51,27 @@ public class ATMForm extends FormLayout {
 		
 		registerBtn.addClickListener(new ClickListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void buttonClick(ClickEvent event) {
 
 				RestTemplate restTemplate = new RestTemplate();
 				// TODO use Controller path
 				String url = "http://localhost:8082/user/register";
-				String requestJson =
+				/*String requestJson =
 						"{\"login\":\"" + emailTxt.getValue() + "\"," + "\"password\":\""
-						+ passwordTxt.getValue() + "\"}";
+						+ passwordTxt.getValue() + "\"}";*/
+				ObjectMapper mapper = new ObjectMapper();
+				Map requestMap = new HashMap();
+				requestMap.put("login", emailTxt.getValue());
+				requestMap.put("password", passwordTxt.getValue());
+				String requestJson = null;
+				try {
+					requestJson = mapper.writeValueAsString(requestMap);
+				} catch (JsonProcessingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				System.out.println(requestJson);
 				HttpHeaders headers = new HttpHeaders();
 				headers.setContentType(MediaType.APPLICATION_JSON);
@@ -59,6 +79,21 @@ public class ATMForm extends FormLayout {
 				HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
 	
 				String answer = restTemplate.postForObject(url, entity, String.class);
+				//ObjectMapper mapper = new ObjectMapper();
+				Map<String, String> map = null;
+				try {
+						map = mapper.readValue(answer, Map.class);
+				} catch (JsonParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(">>>map >> " + ((HashMap)map).get("status"));
 				System.out.println(answer);
 				messageLbl.setCaption(answer);
 			}

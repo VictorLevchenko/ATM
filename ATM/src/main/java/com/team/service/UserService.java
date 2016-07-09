@@ -19,7 +19,6 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired 
 	private HttpSession session;
-	
 	/**
 	 * 
 	 * @param login
@@ -80,6 +79,7 @@ public class UserService {
 	 * @return
 	 * @throws ErrorResponseException
 	 */
+	
 	public User getAuthorizedUserFromSession() throws ErrorResponseException {
 		
 		logger.info(">> into getAuthorizedUserFromSession");
